@@ -1,0 +1,5 @@
+/* App.css - Đã dọn sạch template mặc định của Vite */
+#root {
+  /* Cho phép full width để layout sidebar hoạt động đúng */
+  width: 100%;
+}
