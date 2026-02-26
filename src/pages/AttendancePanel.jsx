@@ -91,8 +91,21 @@ export default function AttendancePanel() {
                 scans: null,
             });
 
-            // QR URL dùng origin hiện tại — trên GitHub Pages sẽ là https://...github.io/...
-            const scanLink = `${window.location.origin}/scan/${courseId}/${newSessionId}`;
+            // Xây dựng URL cho QR Code:
+            // - Nếu đang chạy localhost → dùng IP LAN để điện thoại cùng WiFi quét được
+            // - Nếu đang production (GitHub Pages) → dùng origin + base path
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            let baseUrl = window.location.origin + import.meta.env.BASE_URL;
+            if (isLocal) {
+                try {
+                    const res = await fetch('/api/get-ip');
+                    const data = await res.json();
+                    if (data.ip) baseUrl = `http://${data.ip}:5173/`;
+                } catch {
+                    toast.error('Không lấy được IP LAN. Hãy deploy lên GitHub Pages để dùng mọi nơi.');
+                }
+            }
+            const scanLink = `${baseUrl.replace(/\/$/, '')}/scan/${courseId}/${newSessionId}`;
             setScanUrl(scanLink);
 
             // Tính năng #3: Khởi động đếm ngược
