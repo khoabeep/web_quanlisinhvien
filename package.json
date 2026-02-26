@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "set VITE_BASE=/Web_DiemDanh/ && vite build",
+    "predeploy": "set VITE_BASE=/web_quanlisinhvien/ && vite build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
