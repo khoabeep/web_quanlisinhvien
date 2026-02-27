@@ -35,11 +35,11 @@ export const AuthProvider = ({ children }) => {
             setUser(foundUser);
             localStorage.setItem('lms_auth_user', foundUser.id.toString());
             toast.success(`Đăng nhập thành công! Chào ${foundUser.name}`);
-            return true;
+            return foundUser; // trả về object để dùng ngay, không chờ state update
         }
         console.error("Login failed. Details:", { submittedCode: code, foundUserPassword: foundUser?.password });
         toast.error('Sai mã đăng nhập hoặc mật khẩu!');
-        return false;
+        return null;
     };
 
     const logout = () => {

@@ -22,10 +22,10 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        const success = await login(code, password);
+        const loggedInUser = await login(code, password);
         setIsLoading(false);
-        if (success) {
-            if (code === 'admin' || user?.role === 'teacher') {
+        if (loggedInUser) {
+            if (loggedInUser.role === 'admin' || loggedInUser.role === 'teacher') {
                 navigate('/teacher');
             } else {
                 navigate('/student');
